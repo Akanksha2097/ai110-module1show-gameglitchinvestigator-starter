@@ -32,6 +32,8 @@ These issues showed me that an application can load successfully while containin
   and what it showed you about your code.
 - Did AI help you design or understand any tests? How?
 
+I ran python -m pytest -v in the VS Code terminal. All 20 tests passed in 0.03 seconds, including tests for correct and incorrect guesses, invalid input, different difficulty ranges, and score calculations. This confirmed that the extracted game-logic functions behaved as expected for the tested cases.
+
 ---
 
 ## 4. What did you learn about Streamlit and state?

@@ -41,13 +41,45 @@ Describe your fixed game in numbered steps so a reader can follow along without 
 
 **Screenshot** *(optional)*: <!-- Insert a screenshot of your fixed, winning game here -->
 
-## 🧪 Test Results
+### Test Results
 
+I executed the automated test suite using:
+
+```bash
+python -m pytest -v
 ```
-# Paste your pytest output here, e.g.:
-# pytest tests/
-# ========================= X passed in 0.XXs =========================
+
+The test suite collected 20 tests and all 20 passed successfully.
+
+```text
+platform darwin -- Python 3.13.15, pytest-9.1.1
+collected 20 items
+
+test_easy_difficulty PASSED
+test_normal_difficulty PASSED
+test_hard_difficulty PASSED
+test_correct_guess PASSED
+test_guess_too_low PASSED
+test_guess_too_high PASSED
+test_guess_with_invalid_secret_type PASSED
+test_valid_integer PASSED
+test_empty_input PASSED
+test_whitespace_input PASSED
+test_decimal_input PASSED
+test_text_input PASSED
+test_none_input PASSED
+test_negative_integer_parsing PASSED
+test_large_number_parsing PASSED
+test_score_too_low PASSED
+test_score_too_high PASSED
+test_score_win PASSED
+test_score_minimum_win_bonus PASSED
+test_score_unknown_outcome PASSED
+
+20 passed in 0.03s
 ```
+
+The tests verify the game logic, input parsing, difficulty ranges, and scoring rules.
 
 ## 🚀 Stretch Features
 

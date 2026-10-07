@@ -1,26 +1,58 @@
-def get_range_for_difficulty(difficulty: str):
-    """Return (low, high) inclusive range for a given difficulty."""
-    raise NotImplementedError("Refactor this function from app.py into logic_utils.py")
+
+"""Shared game logic for Game Glitch Investigator."""
 
 
-def parse_guess(raw: str):
-    """
-    Parse user input into an int guess.
+def get_range_for_difficulty(difficulty: str) -> tuple[int, int]:
+    """Return the inclusive number range for the selected difficulty."""
+    ranges = {
+        "Easy": (1, 20),
+        "Normal": (1, 100),
+        "Hard": (1, 50),
+    }
 
-    Returns: (ok: bool, guess_int: int | None, error_message: str | None)
-    """
-    raise NotImplementedError("Refactor this function from app.py into logic_utils.py")
-
-
-def check_guess(guess, secret):
-    """
-    Compare guess to secret and return (outcome, message).
-
-    outcome examples: "Win", "Too High", "Too Low"
-    """
-    raise NotImplementedError("Refactor this function from app.py into logic_utils.py")
+    return ranges.get(difficulty, (1, 100))
 
 
-def update_score(current_score: int, outcome: str, attempt_number: int):
-    """Update score based on outcome and attempt number."""
-    raise NotImplementedError("Refactor this function from app.py into logic_utils.py")
+def parse_guess(raw: str) -> tuple[bool, int | None, str | None]:
+    """Validate input and convert a whole-number string to an integer."""
+    if raw is None or not isinstance(raw, str) or not raw.strip():
+        return False, None, "Enter a guess."
+
+    try:
+        guess = int(raw.strip())
+    except ValueError:
+        return False, None, "Please enter a valid whole number."
+
+    return True, guess, None
+
+
+def check_guess(guess: int, secret: int) -> tuple[str, str]:
+    """Compare a guess with the secret and return an outcome and hint."""
+    if not isinstance(guess, int) or not isinstance(secret, int):
+        raise TypeError("Guess and secret must be integers.")
+
+    if guess == secret:
+        return "Win", "🎉 Correct!"
+
+    # FIX: AI-assisted refactor; high and low hints are no longer reversed.
+    if guess > secret:
+        return "Too High", "📉 Go LOWER!"
+
+    return "Too Low", "📈 Go HIGHER!"
+
+
+def update_score(
+    current_score: int,
+    outcome: str,
+    attempt_number: int,
+) -> int:
+    """Update the game score using consistent scoring rules."""
+    if outcome == "Win":
+        points = max(10, 100 - 10 * attempt_number)
+        return current_score + points
+
+    # FIX: Incorrect guesses always receive the same penalty.
+    if outcome in ("Too High", "Too Low"):
+        return current_score - 5
+
+    return current_score
